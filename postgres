@@ -14,6 +14,7 @@ pg_restore.exe --host "localhost" --port "5443" --username "postgres" --no-passw
 
 //  --- вывод информации в виде столбца (только psql) ----------------------------------------------------
 SELECT * FROM pg_file_settings WHERE name = 'listen_addresses'\gx
+SELECT setting FROM pg_settings WHERE name = 'config_file';
 
 //  --- выборка параметров конфигурации ------------------------------------------------------------------
 psql -c 'SELECT name, setting, unit, short_desc, sourcefile, sourceline, context, pending_restart FROM pg_settings;'
