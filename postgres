@@ -1,0 +1,2 @@
+//  Восстановление бэкапа из файла custom формата:
+pg_restore.exe --host "localhost" --port "5443" --username "postgres" --no-password --dbname "base" --verbose "D:\databases\somedb.backup"
