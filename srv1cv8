@@ -1,0 +1,5 @@
+//  Создание службы хранилища
+sc create "1CCRREP83999999"  binPath= "C:\Program files\1cv8\8.3.99.9999\bin\crserver.exe -srvc -port 40001 -range 40100:40131 -d C:\Repos\8.3.99.9999 -usr .\USR1CV8 -pwd iampassword" start= auto displayname= "Сервер хранилища 1С (8.3.99.9999)"
+
+//  Создание службы сервера 1С
+"C:\Program Files\1cv8\8.3.99.9999\bin\ragent.exe" -srvc -agent -regport 1541 -port 1540 -range 1560:1591 -d "C:\Program Files\1cv8\srvinfo"
