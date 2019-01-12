@@ -7,7 +7,10 @@ pg_restore.exe --host "localhost" --port "5443" --username "postgres" --no-passw
 
 //  psql и sql запросы:
 //  --- информация о текущем подключении -----------------------------------------------------------------
-\conninfo
+\conninfo   - подключение
+\!          - команды ОС
+\h          - faq по команде
+\c          - новое подключение
 
 //  --- вывод информации в виде столбца (только psql) ----------------------------------------------------
 SELECT * FROM pg_file_settings WHERE name = 'listen_addresses'\gx
@@ -20,3 +23,10 @@ SELECT name, setting, unit FROM pg_settings WHERE context = 'postmaster';
 
 //  --- получаем список доступных расширений -------------------------------------------------------------
 psql -c 'SELECT name, comment FROM pg_available_extensions ORDER BY name;'
+
+//  --- установка и использование параметров -------------------------------------------------------------
+\set test Hi!
+\unset test
+\echo :test
+SELECT now() AS curr_time \gset
+\echo :curr_time
