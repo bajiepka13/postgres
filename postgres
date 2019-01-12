@@ -1,5 +1,5 @@
 //  Запуск | остановка сервера Postgres
-pg_ctl -w -l /home/postgres/logfile -D /usr/local/pgsql/data stop | start
+pg_ctl -w -l /home/postgres/logfile -D /usr/local/pgsql/data stop|start -m fast|smart|immediate
 
 //  Восстановление бэкапа из файла custom формата:
 //  ------------------------------------------------------------------------------------------------------
