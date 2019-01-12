@@ -1,2 +1,22 @@
+//  Запуск | остановка сервера Postgres
+pg_ctl -w -l /home/postgres/logfile -D /usr/local/pgsql/data stop | start
+
 //  Восстановление бэкапа из файла custom формата:
+//  ------------------------------------------------------------------------------------------------------
 pg_restore.exe --host "localhost" --port "5443" --username "postgres" --no-password --dbname "base" --verbose "D:\databases\somedb.backup"
+
+//  psql и sql запросы:
+//  --- информация о текущем подключении -----------------------------------------------------------------
+\conninfo
+
+//  --- вывод информации в виде столбца (только psql) ----------------------------------------------------
+SELECT * FROM pg_file_settings WHERE name = 'listen_addresses'\gx
+
+//  --- выборка параметров конфигурации ------------------------------------------------------------------
+psql -c 'SELECT name, setting, unit, short_desc, sourcefile, sourceline, context, pending_restart FROM pg_settings;'
+
+//  --- выборка параметров конфигурации, которые требуют перезапуска сервера СУБД ------------------------
+SELECT name, setting, unit FROM pg_settings WHERE context = 'postmaster';
+
+//  --- получаем список доступных расширений -------------------------------------------------------------
+psql -c 'SELECT name, comment FROM pg_available_extensions ORDER BY name;'
