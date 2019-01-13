@@ -31,3 +31,18 @@ psql -c 'SELECT name, comment FROM pg_available_extensions ORDER BY name;'
 \echo :test
 SELECT now() AS curr_time \gset
 \echo :curr_time
+
+postgres@postgres=# SELECT
+postgres@postgres-# pg_current_wal_lsn();
+
+SELECT
+pg_current_wal_lsn() AS posl
+postgres@postgres-# \gset
+
+CREATE TABLE t (n integer);
+INSERT INTO t SELECT gen.id FROM generate_series(1,1000) AS gen(id);
+SELECT pg_current_wal_lsn();
+SELECT pg_current_wal_lsn() AS pos2 \gset
+SELECT :'pos2'::pg_lsn - :'posl'::pg_lsn;
+
+SELECT * FROM pg_ls_waldir() ORDER BY name;
