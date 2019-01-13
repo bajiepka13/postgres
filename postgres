@@ -46,3 +46,15 @@ SELECT pg_current_wal_lsn() AS pos2 \gset
 SELECT :'pos2'::pg_lsn - :'posl'::pg_lsn;
 
 SELECT * FROM pg_ls_waldir() ORDER BY name;
+
+//  --- просмотр подпроцессов процесса postmaster ---
+ps -o pid,command --ppid `head -n 1 $PGDATA/postmaster.pid`
+
+psql --no-psqlrc --quiet --command='SELECT datname, datistemplate, datallowconn, datconnlimit FROM pg_database;'
+
+ALTER DATABASE database RENAME TO newdatabase;
+ALTER DATABASE database CONNECTION LIMIT 10;
+SELECT pg_size_pretty(pg_database_size('postgres'));
+ALTER DATABASE my_database SET search_path = app;
+
+SELECT pg_database_size(current_database());
