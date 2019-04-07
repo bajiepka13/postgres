@@ -61,3 +61,15 @@ SELECT pg_size_pretty(pg_database_size('postgres'));
 ALTER DATABASE my_database SET search_path = app;
 
 SELECT pg_database_size(current_database());
+
+//  выборка первых 20-то самых больших таблиц базы:
+select
+schemaname,
+tablename,
+pg_size_pretty(pg_relation_size(schemaname || '.' || tablename)) as size_p,
+pg_total_relation_size(schemaname || '.' || tablename) as siz,
+pg_size_pretty(pg_total_relation_size(schemaname || '.' || tablename)) as total_size_p,
+pg_total_relation_size(schemaname || '.' || tablename) - pg_relation_size(schemaname || '.' || tablename) as index_size,
+(100*(pg_total_relation_size(schemaname || '.' || tablename) - pg_relation_size(schemaname || '.' || tablename)))/case when pg_total_relation_size(schemaname || '.' || tablename) = 0 then 1 else pg_total_relation_size(schemaname || '.' || tablename) end || '%' as index_pct
+from pg_tables
+order by siz desc limit 20;
